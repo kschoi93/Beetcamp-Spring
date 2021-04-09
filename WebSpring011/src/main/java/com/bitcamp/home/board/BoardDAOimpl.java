@@ -22,4 +22,5 @@ public interface BoardDAOimpl {
 	
 	//조회수 증가
 	public void hitcount(int no);
+
 }

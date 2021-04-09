@@ -10,6 +10,41 @@ public class BoardVO {
 	private String ip;
 	
 	
+	/////////////////////////////////////코멘트
+	private int coment_no;
+	private String coment_content;
+	private int board_no;
+	
+	public BoardVO() {
+		
+	}
+	public BoardVO(String userid, String writedate, int board_no, String coment_content) {
+		this.userid=userid;
+		this.writedate=writedate;
+		this.board_no=board_no;
+		this.coment_content=coment_content;
+	}
+	
+	public int getComent_no() {
+		return coment_no;
+	}
+	public void setComent_no(int coment_no) {
+		this.coment_no = coment_no;
+	}
+	public String getComent_content() {
+		return coment_content;
+	}
+	public void setComent_content(String coment_content) {
+		this.coment_content = coment_content;
+	}
+	
+	public int getBoard_no() {
+		return board_no;
+	}
+	public void setBoard_no(int board_no) {
+		this.board_no = board_no;
+	}
+	/////////////////////////////////////////////
 	public int getNo() {
 		return no;
 	}

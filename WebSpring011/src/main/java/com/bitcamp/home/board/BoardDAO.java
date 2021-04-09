@@ -164,5 +164,4 @@ public class BoardDAO extends DBCPConnection implements BoardDAOimpl {
 	}
 
 
-
 }

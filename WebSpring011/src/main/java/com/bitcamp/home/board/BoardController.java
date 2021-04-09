@@ -1,5 +1,6 @@
 package com.bitcamp.home.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -17,10 +19,8 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		BoardDAO dao = new BoardDAO();
 		List<BoardVO> list =dao.boardAllRecord();
-		
 		mav.addObject("list",list);
 		mav.setViewName("board/boardList");
-		
 		return mav;
 	}
 	
@@ -64,8 +64,8 @@ public class BoardController {
 		dao.boardSelect(vo);
 		
 		mav.addObject("vo", vo);
-		mav.setViewName("board/boardView");
 		
+		mav.setViewName("board/boardView");
 		return mav;
 	}
 	
@@ -119,4 +119,5 @@ public class BoardController {
 		
 		return mav;
 	}
+	
 }

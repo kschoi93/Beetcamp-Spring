@@ -24,8 +24,9 @@ public class MemberController {
 			mav.setViewName("redirect:login");
 		}else {// 로그인 성공
 			HttpSession ses = req.getSession();
-			ses.setAttribute("logId", vo2);
-			ses.setAttribute("logName", vo.getUsername());
+			ses.setAttribute("logId", vo2.getUserid());
+			
+			ses.setAttribute("logName", vo2.getUsername());
 			ses.setAttribute("logStatus", "Y");
 			
 			mav.setViewName("redirect:/");
