@@ -7,6 +7,48 @@
 		}
 	}
 	$(function(){
+		$(document).on('click',"#comentView input[value='수정']",function(){
+			$("#comentView div:nth-child(1)").css('display','block');
+			$("#comentView div:nth-child(2)").css('display','none');
+			$(this).parent().css('display','none');
+			$(this).parent().next().css('display','block');
+			
+		});
+		
+		$(document).on('click',"#comentView input[value='삭제']",function(){
+			if(confirm('댓글을 삭제하시겠습니까 ?')){
+				var url = "/home/comentDelete";
+				var params = "coment_no="+$(this).parent().next().children().children().next().next().val();
+				
+				$.ajax({
+					url:url,
+					data : params,
+					success : function(result){
+						comentList();
+					}, error : function(){
+						console.log('삭제 에러 .. .. . . .');
+					}
+					
+				})
+			}
+		});
+		
+		$(document).on('submit','#comentView form',function(){
+			var url = "/home/comentEdit";
+			var params = $(this).serialize();
+			
+			$.ajax({
+				url : url,
+				data : params,
+				type : "POST",
+				success : function(){
+					comentList();
+				}, error : function(){
+					console.log('댓글수정에러.....');
+				}
+			});
+		})
+		
 		function comentList(){
 			var url = "/home/comentAllSelect";
 			var params = "board_no="+${vo.no};
@@ -24,6 +66,13 @@
 							tag += "<input type='button' value='삭제'/>";
 						}
 						tag += "<br/>"+obj.coment_content+"</div>";
+							tag += "<div style='display:none;'>";
+								tag += "<form method='post' id='editFrm'>";
+									tag += "<textarea name='coment_content'>"+obj.coment_content+"</textarea>";
+									tag += "<input type='submit' value='수정하기'>"
+									tag += "<input type='hidden' name='coment_no' value='"+obj.coment_no+"'/>";	
+								tag += "</form>"
+							tag += "</div>";
 						tag += "</li>";
 					});
 					

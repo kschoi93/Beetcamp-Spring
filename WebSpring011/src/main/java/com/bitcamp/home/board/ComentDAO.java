@@ -60,11 +60,40 @@ public class ComentDAO extends DBCPConnection {
 	}
 	//댓글 삭제
 	public int comentDelete(int no) {
-		return 0;
+		int result=0;
+		try {
+			getConn();
+			sql="delete from coment where coment_no=?";
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("삭제 실패");
+			
+		}finally {
+			getClose();
+		}
+		
+		return result;
+		
 	}
 	//댓글 수정
-	public ComentVO comentEdit(ComentVO vo) {
+	public int comentEdit(ComentVO vo) {
+		int result= 0;
 		try {
+			getConn();
+			sql="update coment set coment_content=? where coment_no=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getComent_content());
+			pstmt.setInt(2, vo.getComent_no());
+			
+			result = pstmt.executeUpdate();
 			
 		}catch(Exception e) {
 			System.out.println("댓글 수정 오류 .....");
@@ -72,6 +101,6 @@ public class ComentDAO extends DBCPConnection {
 		}finally {
 			getClose();
 		}
-		return vo;
+		return result;
 	}
 }

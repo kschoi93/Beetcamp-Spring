@@ -37,4 +37,29 @@ public class ComentController {
 		return dao.comentAllSelect(vo);
 		
 	}
+	
+	@RequestMapping("/comentEdit")
+	@ResponseBody
+	public String comentEdit(ComentVO vo) {
+		ComentDAO dao = new ComentDAO();
+		int result = dao.comentEdit(vo);
+		if(result>0) {
+			return "수정성공";
+		} else {
+			return "수정실패";
+		}
+	}
+	
+	@RequestMapping("/comentDelete")
+	@ResponseBody
+	public String comentDelete(ComentVO vo) {
+		ComentDAO dao = new ComentDAO();
+		
+		int result = dao.comentDelete(vo.getComent_no());
+		if(result>0) {
+			return "삭제 성공입니다.";
+		} else {
+			return "삭제 실패 ㅠㅠㅠㅠㅠ";
+		}
+	}
 }
