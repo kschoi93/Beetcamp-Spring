@@ -1,6 +1,7 @@
 package com.bitcamp.jdbc.data;
 
 import java.io.File;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -309,5 +310,35 @@ public class DataController {
 			mav.setViewName("redirect:dataEdit");
 		}
 		return mav;
+	}
+	
+	@RequestMapping("/dataDel")
+	public ModelAndView dataDelete(int no, HttpSession session) {
+		String userid = (String)session.getAttribute("logId");
+		
+		//데이터베이스의 파일명을 가져오기
+		DataVO vo = new DataVO();
+		ModelAndView mav = new ModelAndView();
+		
+		DataDAO dao = new DataDAO();
+		DataVO dbFilename = dao.getSelectFilename(no);
+		
+		//레코드 삭제
+		int result = dao.dataDelete(no, userid);
+		String path = session.getServletContext().getRealPath("/upload");
+		if(result>0) {//삭제
+			File f = new File(path,dbFilename.getFilename1());//파일 지우기
+			f.delete();
+			if(dbFilename.getFilename2()!=null && !dbFilename.getFilename2().equals("")) {
+				File f2 = new File(path,dbFilename.getFilename2());
+				f2.delete();
+			}
+			mav.setViewName("redirect:dataList");//리스트 이동
+		}else {//삭제실패
+			mav.addObject("no",no);
+			mav.setViewName("redirect:dataView");//글내용보기 이동
+		}
+		return mav;
+		
 	}
 }
