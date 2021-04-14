@@ -25,8 +25,9 @@
 			
 		});
 		
+		// 수정
 		$(document).on('submit','#replyView form',function(){
-			var url = "boardReplyEdit";
+			var url = "replyEdit";
 			var params = $(this).serialize();
 			
 			$.ajax({
@@ -41,10 +42,11 @@
 			});
 		})
 		
+		//삭제
 		$(document).on('click',"#replyView input[value='삭제']",function(){
 			if(confirm('댓글을 삭제하시겠습니까 ?')){
-				var url = "boardReplyDelete";
-				var params = "no="+$(this).parent().next().children().children().next().next().val();
+				var url = "replyDelete";
+				var params = "num="+$(this).parent().next().children().children().next().next().next().val();
 				
 				$.ajax({
 					url:url,
@@ -71,7 +73,7 @@
 					var tag = '<ul>';
 					$result.each(function(idx,obj){
 						tag+="<li style='border-bottom:1px solid #ddd'>";
-						tag+="<div>" + obj.userid + " ("+ obj.writedate + ") ";
+						tag+="<div>" + obj.userid + " ("+ obj.replydate + ") ";
 						if("${logId}"==obj.userid){
 							tag += "<input type='button' value='수정'/>";
 							tag += "<input type='button' value='삭제'/>";
@@ -81,7 +83,8 @@
 								tag += "<form method='post' id='editFrm'>";
 									tag += "<textarea name='content'>"+obj.content+"</textarea>";
 									tag += "<input type='submit' value='수정하기'>"
-									tag += "<input type='hidden' name='no' value='"+obj.no+"'/>";	
+									tag += "<input type='hidden' name='no' value='"+obj.no+"'/>";
+									tag += "<input type='hidden' name='num' value='"+obj.num+"'/>";
 								tag += "</form>"
 							tag += "</div>";
 						tag += "</li>";
@@ -96,19 +99,28 @@
 		}//replyList
 		
 		$("#btn").click(function(){
-			let url = "boardReplyInsert";
-			let params = $("#writeFrm").serialize();
+			var url = "boardReplyInsert";
+			var params = $("#writeFrm").serialize();
 			if($("#content").val()==""){
 				alert("글을 입력해주세요");
 			}else{
 				$.ajax({
 					url:url,
 					data:params,
-					success:function(){
-						$("#content").html("");
+					beforeSend : function(xmlHttpRequest){
+		                xmlHttpRequest.setRequestHeader("AJAX", "true"); // ajax 호출을  header에 기록
+		            }, 
+					success:function(result){
+						console.log(result);
 						replyList();
+						$("#content").val("");
 					}, error:function(e){
-						console.log(e);
+						if(e.resultCode==300){
+							swal("",returnData.resultMsg, "error");
+						}
+						if(e.status==400){
+							location.href="loginForm";
+						}
 					}
 				})
 			}

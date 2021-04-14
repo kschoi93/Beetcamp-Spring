@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,17 +20,24 @@ public class BoardReplyController {
 	SqlSession sqlSession;
 	
 	@RequestMapping("/boardReplyInsert")
+	@ResponseBody
 	public String boardReplyInsert(BoardReplyVO vo, HttpSession session, HttpServletRequest req) {
 		vo.setUserid((String)session.getAttribute("logId"));
 		vo.setIp(req.getRemoteAddr());
 		System.out.println(vo.getUserid()+", "+vo.getIp()+", "+vo.getContent()+", "+vo.getNo());
 		BoardReplyDAOImp dao = sqlSession.getMapper(BoardReplyDAOImp.class);
 		
-		dao.replyInsert(vo);
-		return "board/boardView";
+		
+		int result = dao.replyInsert(vo);
+		if(result>0) {
+			return "success";
+		}else {
+			return "error";
+		}
 	}
 	
 	@RequestMapping("/boardReplyList")
+	@ResponseBody
 	public List<BoardReplyVO> boardReplyList(BoardReplyVO vo,HttpServletRequest req){
 		BoardReplyDAOImp dao = sqlSession.getMapper(BoardReplyDAOImp.class);
 		List<BoardReplyVO> lst = dao.replyList(vo);
@@ -39,6 +48,7 @@ public class BoardReplyController {
 	}
 	
 	@RequestMapping("/replyEdit")
+	@ResponseBody
 	public String replyEdit(BoardReplyVO vo) {
 		BoardReplyDAOImp dao = sqlSession.getMapper(BoardReplyDAOImp.class);
 		int result = dao.replyEdit(vo);
@@ -50,10 +60,10 @@ public class BoardReplyController {
 	}
 	
 	@RequestMapping("/replyDelete")
+	@ResponseBody
 	public String replyDelete(BoardReplyVO vo) {
 		BoardReplyDAOImp dao = sqlSession.getMapper(BoardReplyDAOImp.class);
-		
-		int result = dao.replyDelete(vo.getNo());
+		int result = dao.replyDelete(vo.getNum());
 		if(result>0) {
 			return "삭제 성공입니다.";
 		} else {

@@ -46,4 +46,10 @@
 	</beans:bean>
 	
 	<!-- 순서는 이렇다. oracle db를 mybatis factory에 넣고 mybatis factory를 객체로 만드는 DI 과정이다 -->
+	
+	
+	<!-- 트랜잭션 객체 생성 -->
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:constructor-arg name="dataSource" ref="dataSource"></beans:constructor-arg>
+	</beans:bean>
 </beans:beans>
