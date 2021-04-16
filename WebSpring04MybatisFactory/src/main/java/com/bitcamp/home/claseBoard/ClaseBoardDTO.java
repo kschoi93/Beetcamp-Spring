@@ -15,9 +15,27 @@ public class ClaseBoardDTO {
 	private int lvl;
 	
 	
+	private int preLag;
+	private int nextLead;
 	
 	
 	
+	
+	
+	
+	
+	public int getPreLag() {
+		return preLag;
+	}
+	public void setPreLag(int preLag) {
+		this.preLag = preLag;
+	}
+	public int getNextLead() {
+		return nextLead;
+	}
+	public void setNextLead(int nextLead) {
+		this.nextLead = nextLead;
+	}
 	public int getNo() {
 		return no;
 	}

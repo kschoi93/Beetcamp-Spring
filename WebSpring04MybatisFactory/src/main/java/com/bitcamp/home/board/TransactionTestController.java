@@ -39,7 +39,7 @@ public class TransactionTestController {
 		vo2.setSubject(vo.getSubject());
 		vo2.setContent(vo.getContent());
 		vo2.setIp(vo.getIp());
-		vo2.setUserid(vo.getUserid()+"123894798127349871238948912738947192834789");
+		vo2.setUserid(vo.getUserid()+"123894798127349871238948912738947192834789"/*트랜잭션 발동하는지 테스트*/);
 		//============트랜잭션 구현을 위한 객체생성===========
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		//PROPAGATION_REQUIRED : 트랜잭션이 있으면 그 상황에서 실행, 트랜잭션이 없으면 새로운 트랜잭션을 생성해서 실행

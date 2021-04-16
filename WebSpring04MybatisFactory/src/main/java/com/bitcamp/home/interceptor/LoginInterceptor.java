@@ -29,14 +29,16 @@ public class LoginInterceptor extends HandlerInterceptorAdapter  {
 		String userid= (String)req.getSession().getAttribute("logId");
 		
 		if(userid==null || userid.equals("")) {//로그인 안된경우
-			//2. ajax로 사용시 확인
-			if(req.getHeader("x-requested-with").equals("XMLHttpRequest")){			
+			
+			if(req.getHeader("AJAX")==null) {
+				//로그인으로 이동 
+				res.sendRedirect(req.getContextPath()+"/loginForm");
+				return false;//접속한 컨트롤러의 실행을 중지하고 새로 접속하는 곳을 지정한다.
+			} else if(req.getHeader("AJAX").equals("true")){		//2. ajax로 사용시 확인	
 				res.sendError(400);
 				return false;
 			}
-			//로그인으로 이동 
-			res.sendRedirect(req.getContextPath()+"/loginForm");
-			return false;//접속한 컨트롤러의 실행을 중지하고 새로 접속하는 곳을 지정한다.
+			
 		}
 		
 		return true;//true가 리턴되면 접속한 컨트롤러를 계속 실행한다.
