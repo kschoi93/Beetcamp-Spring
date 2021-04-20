@@ -32,10 +32,31 @@
 		<a href="javascript:boardDel()">삭제</a>
 		<a href="claseWriteForm?no=${dto.no }">답글</a>
 	</div>
-	<c:if test="${NoLagLead!=3 }"><!-- 답글이 아니면 나오게 해라 -->
+	<div>
+		<!-- 이전글 다음글 -->
+		
+		다음글 :
+		<c:if test="${vo.prevNo==0}">
+			${vo.prevSubject }
+		</c:if>
+		<c:if test="${vo.prevNo>0 }">
+			<a href="claseView?no=${vo.prevNo }">${vo.prevSubject }</a>
+		</c:if><br/>
+		
+		이전글 : 
+		<c:if test="${vo.nextNo==0 }">
+			${vo.nextSubject }
+		</c:if>
+		<c:if test="${vo.nextNo>0 }">
+			<a href="claseView?no=${vo.nextNo }">${vo.nextSubject }</a>
+		</c:if>
+	</div>
+
+<%-- 	<c:if test="${NoLagLead!=3 }"><!-- 답글이 아니면 나오게 해라 -->
 		<div>
 			이전글 : 
-			<c:if test="${lagNo!= null}">
+			<c:if test="<"${lagNo!= null}">
+			
 				<a href="claseView?no=${lagNo }">${lagName }</a>
 			</c:if>
 			<c:if test="${lagNo== null }">
@@ -51,7 +72,7 @@
 				다음글이 없습니다.
 			</c:if>
 		</div>
-	</c:if>
+	</c:if> --%>
 </div>
 </body>
 </html>

@@ -20,7 +20,9 @@ public interface ClaseBoardDAOImp {
 	
 	
 	
-	public ClaseBoardDTO getLagLead(int no);//이전글 다음글 확인
-	public String getLagLeadName(int no);
+//	public ClaseBoardDTO getLagLead(int no);//이전글 다음글 확인
+//	public String getLagLeadName(int no);
+	
+	public PrevNextVO lagLeadSelect(int no);//이전글 다음글
 	
 }

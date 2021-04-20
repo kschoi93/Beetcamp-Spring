@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<update id="claseDeleteUpdate">
 		update claseBoard set subject='삭제된글입니다....', content='삭제된 글입니다....' where no=#{param1} and userid=#{param2}
 	</update>
-	
+	<!-- 죽은 코드 -->
 	<select id="getLagLead" resultType="com.bitcamp.home.claseBoard.ClaseBoardDTO">
 		select preLag, nextLead from (select ref, step,
 		lag(ref,1,0) over(order by ref) preLag, 
@@ -52,5 +52,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</select>
 	<select id="getLagLeadName" resultType="String">
 		select subject from claseBoard where no =#{param1}
+	</select>
+	<!--  -->
+	<select id="lagLeadSelect" resultType="com.bitcamp.home.claseBoard.PrevNextVO">
+		select * from(
+			select no,
+			lag(no, 1, 0) over(order by no desc) prevNo,
+			lag(subject, 1, '이전글이 없습니다.') over (order by no desc) prevSubject, 
+			lead(no,1,0) over (order by no desc) nextNo,
+			lead(subject,1,'다음글이 없습니다.') over (order by no desc) nextSubject
+			from claseboard where step=0 order by ref desc, lvl asc) 
+		where no=#{param1}
 	</select>
 </mapper>

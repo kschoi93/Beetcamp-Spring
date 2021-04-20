@@ -1,0 +1,37 @@
+package com.bitcamp.myapp.service;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import com.bitcamp.myapp.dao.BoardDAO;
+import com.bitcamp.myapp.vo.BoardVO;
+@Service
+public class BoardServiceImp implements BoardService {
+	@Inject
+	BoardDAO boardDAO;
+
+	@Override
+	public List<BoardVO> boardAllRecord() {
+		// TODO Auto-generated method stub
+		return boardDAO.boardAllRecord();
+	}
+	
+	public int boardInsert(BoardVO vo){
+		return boardDAO.boardInsert(vo);
+	}
+
+	@Override
+	public BoardVO boardSelect(int no) {
+		return boardDAO.boardSelect(no);
+	}
+
+	@Override
+	public int boardEditOk(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return boardDAO.boardEditOk(vo);
+	}
+
+}

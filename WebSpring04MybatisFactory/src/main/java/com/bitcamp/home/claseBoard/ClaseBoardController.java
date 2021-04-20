@@ -72,29 +72,25 @@ public class ClaseBoardController {
 		mav.addObject("dto",dao.claseSelect(no));
 		mav.setViewName("claseBoard/claseView");
 		
+		//이전글 다음글
+		PrevNextVO vo = dao.lagLeadSelect(no);
+		mav.addObject("vo",vo);
 		
-		// 이전글, 다음글 있는지 확인하기 위해서는 ?
-		// 지금 글 기준으로 이전글이 무엇인지, 다음글이 있는지 확인해야 한다.
-		// 원글이 아니면 필요없다
-		
-		ClaseBoardDTO dto = dao.getStep(no);
-		if(dto.getStep()==0){// 원글이다.
-
-			System.out.println(no);
-			ClaseBoardDTO result = dao.getLagLead(no);
-			if(result.getPreLag()>0){ // 이전글이 있다?
-				mav.addObject("lagName",dao.getLagLeadName(result.getPreLag()));
-				mav.addObject("lagNo",result.getPreLag());
-			}
-			if(result.getNextLead()>0) {
-				mav.addObject("leadName",dao.getLagLeadName(result.getNextLead()));
-				mav.addObject("leadNo",result.getNextLead());
-			}
-			System.out.println("lag ---->"+result.getPreLag() + ",   " + "lead ----->"+ result.getNextLead());
-		}else {// 원글이 아니다.
-			mav.addObject("NoLagLead",3);
-		}
-		
+		/*
+		 * // 이전글, 다음글 있는지 확인하기 위해서는 ? // 지금 글 기준으로 이전글이 무엇인지, 다음글이 있는지 확인해야 한다. // 원글이
+		 * 아니면 필요없다
+		 * 
+		 * ClaseBoardDTO dto = dao.getStep(no); if(dto.getStep()==0){// 원글이다.
+		 * 
+		 * System.out.println(no); ClaseBoardDTO result = dao.getLagLead(no);
+		 * if(result.getPreLag()>0){ // 이전글이 있다?
+		 * mav.addObject("lagName",dao.getLagLeadName(result.getPreLag()));
+		 * mav.addObject("lagNo",result.getPreLag()); } if(result.getNextLead()>0) {
+		 * mav.addObject("leadName",dao.getLagLeadName(result.getNextLead()));
+		 * mav.addObject("leadNo",result.getNextLead()); }
+		 * System.out.println("lag ---->"+result.getPreLag() + ",   " + "lead ----->"+
+		 * result.getNextLead()); }else {// 원글이 아니다. mav.addObject("NoLagLead",3); }
+		 */		
 		return mav;
 	}
 	//답글쓰기 폼
