@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
 	
-	//데이터를 보내는 3가지 방법 
+	//데이터를 보내는 방법 
 	
 	// 첫번째
 	@RequestMapping(value="/aLink", method = RequestMethod.GET)

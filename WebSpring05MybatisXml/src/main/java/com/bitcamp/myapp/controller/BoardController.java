@@ -96,4 +96,20 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	@RequestMapping("/boardDelete")
+	public ModelAndView boardDelete(int no, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		MemberVO vo = (MemberVO)session.getAttribute("logVo");
+		
+		if(boardService.boardDelete(no, vo.getUserid())> 0) {
+			mav.setViewName("redirect:boardList");
+		} else {
+			mav.addObject("no",no);
+			mav.setViewName("redirect:boardView");
+		}
+		
+		return mav;
+	}
 }

@@ -16,4 +16,7 @@
 	<update id="boardEditOk" parameterType="com.bitcamp.myapp.vo.BoardVO">
 		update board set subject=#{subject}, content=#{content} where no=#{no} and userid=#{userid}
 	</update>
+	<delete id="boardDelete">
+		delete from board where no=#{param1} and userid=#{param2}
+	</delete>
 </mapper>
