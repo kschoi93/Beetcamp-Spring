@@ -15,9 +15,26 @@
 	li:nth-child(5n+2){width:60%;}
 	.wordcut{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 </style>
+<script>
+	$(()=>{
+		$('#listAllCheck').change(()=>{
+			if($('#listAllCheck').prop('checked')){
+				$('input[name="noList"]').prop('checked',true);
+			} else {
+				$('input[name="noList"]').prop('checked',false);
+			}
+		});
+		//선택삭제가 클릭되면
+		$("#delSelect").click(()=>{
+			console.log('test');
+			$('#delList').submit();
+		})
+	})
+</script>
 </head>
 <body>
 <div class="container">
+	
 	<h1>Oracle Mybatis noXml 리스트</h1>
 	<c:if test="${logStatus=='Y' }">
 		<a href="write">글쓰기</a>
@@ -33,22 +50,31 @@
 			<input type="submit" value="Search...."/>
 		</form>
 	</div>
-	<ul>
-		<li>번호</li>
-		<li>제목</li>
-		<li>작성자</li>
-		<li>조회수</li>
-		<li>작성일</li>
-		
-		<c:forEach var="list" items="${list }">
-			<li>${list.no }</li>
-			<li class="wordcut"><a href="view?no=${list.no}">${list.subject }</a></li>
-			<li>${list.userid }</li>
-			<li>${list.hit }</li>
-			<li>${list.writedate }</li>
-		</c:forEach>
-		
-	</ul>
+	
+		<input type="checkbox" id="listAllCheck">전체선택
+		<input type="button" value="선택삭제" id="delSelect"/>
+		<form method="get" id="delList" action="multiDel">
+		<ul>
+			<li>번호</li>
+			<li>제목</li>
+			<li>작성자</li>
+			<li>조회수</li>
+			<li>작성일</li>
+			
+	
+			<c:forEach var="list" items="${list }">			
+				<li>
+					<input type="checkbox" name="noList" value="${list.no}"/>
+					${list.no }</li>
+				<li class="wordcut"><a href="view?no=${list.no}">${list.subject }</a></li>
+				<li>${list.userid }</li>
+				<li>${list.hit }</li>
+				<li>${list.writedate }</li>
+			</c:forEach>
+			
+		</ul>
+		</form>
+	
 </div>
 </body>
 </html>

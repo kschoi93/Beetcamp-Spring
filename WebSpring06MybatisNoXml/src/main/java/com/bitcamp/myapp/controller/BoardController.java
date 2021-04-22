@@ -24,6 +24,12 @@ public class BoardController {
 	public ModelAndView boardList(BoardVO vo) {
 		ModelAndView mav = new ModelAndView();
 		
+		/* SearchVO를 사용할때
+		 * if(searchVO.getSearchWord()!=null){ 
+		 * 	searchVO.setSearchWord("%"+searchVO.getSearchWord()+"%");
+		 * }
+		 */
+		
 		mav.addObject("list",service.allList());
 			
 		mav.setViewName("board/list");
@@ -66,11 +72,6 @@ public class BoardController {
 	
 	@RequestMapping("/searchList")
 	public ModelAndView searchList(BoardVO vo) {
-		System.out.println(vo.getSearchKey());
-		System.out.println(vo.getSearchTxt());
-		//mav.addObject("list",service.subjectList());
-		
-		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list",service.searchList(vo));
 		List<BoardVO> vo2 =service.searchList(vo);
@@ -80,4 +81,51 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("/boardEdit")
+	public ModelAndView boardEdit(int no) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("vo",service.boardEditSelect(no));
+		mav.setViewName("board/edit");
+		return mav;
+		
+	}
+	
+	@RequestMapping(value = "/editOk", method = RequestMethod.POST)
+	public String boardEditOk(BoardVO vo, HttpSession session) {
+		vo.setUserid((String)session.getAttribute("logId"));
+		
+		if(service.boardEdit(vo)>0) {
+			return "redirect:view?no="+vo.getNo();
+		}else {
+			return "redirect:boardEdit?no="+vo.getNo();	
+		}
+		
+	}
+	
+	@RequestMapping("/boardDel")
+	public ModelAndView boardDel(BoardVO vo, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		vo.setUserid((String)session.getAttribute("logId"));
+		
+		if(service.boardDel(vo)>0) {
+			mav.setViewName("redirect:list");
+		} else {
+			mav.addObject("no",vo.getNo());
+			mav.setViewName("redirect:view");
+		}
+		
+		return mav;
+	}
+	
+	@RequestMapping("/multiDel")
+	public ModelAndView boardMultiDel(BoardVO vo) {
+		ModelAndView mav = new ModelAndView();
+		for(int no :vo.getNoList()) {
+			System.out.println("no="+no);
+		}
+		int result = service.boardMultiDelete(vo.getNoList());
+		System.out.println("삭제된 레코드 수 ="+ result);
+		mav.setViewName("redirect:list");
+		return mav;
+	}
 }

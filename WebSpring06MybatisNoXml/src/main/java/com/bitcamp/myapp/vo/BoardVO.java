@@ -1,5 +1,7 @@
 package com.bitcamp.myapp.vo;
 
+import java.util.List;
+
 public class BoardVO {
 	private int no;
 	private String userid;
@@ -12,11 +14,22 @@ public class BoardVO {
 	private String searchKey;
 	private String searchTxt;
 	
+	private int[] noList;
+//	private List<Integer> delNoList;
+	public int[] getNoList() {
+		return noList;
+	}
+	public void setNoList(int[] noList) {
+		this.noList = noList;
+	}
+	
+	
 	
 	
 	public String getSearchTxt() {
 		return searchTxt;
 	}
+
 	public void setSearchTxt(String searchTxt) {
 		this.searchTxt = searchTxt;
 	}

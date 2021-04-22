@@ -12,7 +12,16 @@
 </head>
 <body>
 <div class="container">
-	
+	<h1>글수정</h1>
+	<form method="post" action="editOk">
+		<input type="hidden" value="${vo.no }" name="no"/>
+		<ul>
+			<li>제목 : <input type="text" name="subject" value="${vo.subject }" width="100%"/></li>
+			<li>글내용 : <br/>
+				<textarea name="content" cols="60" rows="10">${vo.content }</textarea></li>
+			<li><input type="submit" value="수정하기"/></li>
+		</ul>
+	</form>
 </div>
 </body>
 </html>

@@ -34,6 +34,33 @@ public class BoardServiceImp implements BoardService{
 		
 		return dao.searchList(vo);
 	}
+
+	@Override
+	public BoardVO boardEditSelect(int no) {
+		// TODO Auto-generated method stub
+		return dao.boardEditSelect(no);
+	}
+
+	@Override
+	public int boardEdit(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return dao.boardEdit(vo);
+	}
+
+	@Override
+	public int boardMultiDelete(int[] noList) {
+		// TODO Auto-generated method stub
+		return dao.boardMultiDelete(noList);
+	}
+
+	@Override
+	public int boardDel(BoardVO vo) {
+		// TODO Auto-generated method stub
+		return dao.boardDel(vo);
+	}
+
 	
+
+
 	
 }
